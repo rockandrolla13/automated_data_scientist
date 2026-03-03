@@ -2,6 +2,7 @@
 .venv/
 venv/
 env/
+auto-data-science/
 
 # Python
 __pycache__/
