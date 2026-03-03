@@ -1,0 +1,81 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environment
+.env
+.env.local
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (keep structure, ignore large data)
+data/*.csv
+data/*.parquet
+data/*.pkl
+data/*.h5
+!data/.gitkeep
+
+# Experiment outputs (keep structure)
+experiments/*/figures/*.png
+experiments/*/figures/*.pdf
+!experiments/LOG.md
+
+# Artifacts (keep structure)
+artifacts/reports/*.pdf
+artifacts/figures/*.png
+!artifacts/reports/.gitkeep
+!artifacts/figures/.gitkeep
+
+# Secrets
+*.pem
+*.key
+credentials.json
