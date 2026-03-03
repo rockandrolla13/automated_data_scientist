@@ -27,8 +27,8 @@ pydantic>=2.0
 # -----------------------------------------------------------------------------
 vectorbt>=0.26
 cvxpy>=1.4
-pypfopt>=1.5                # PortfolioOptimizer, BlackLitterman
-empyrical>=0.5              # performance metrics
+pyportfolioopt>=1.5         # PortfolioOptimizer, BlackLitterman
+empyrical-reloaded>=0.5     # performance metrics (Py3.12 compatible fork)
 # openbb>=4.0               # optional - heavy install, uncomment if needed
 
 # -----------------------------------------------------------------------------
