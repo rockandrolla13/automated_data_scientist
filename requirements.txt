@@ -14,88 +14,89 @@ pydantic>=2.0
 
 # -----------------------------------------------------------------------------
 # CREDIT_FI
-# MertonModel, HazardRateBootstrap, SpreadDecomposition, NelsonSiegel,
-# BondAnalytics, OASCalculator, ETFPremiumDiscount, TransitionMatrix
+# Skills: MertonModel, HazardRateBootstrap, SpreadDecomposition, NelsonSiegel,
+#         BondAnalytics, OASCalculator, ETFPremiumDiscount, TransitionMatrix
 # -----------------------------------------------------------------------------
-# Uses: numpy, scipy, pandas (core)
-# No additional dependencies beyond core
+# Uses: numpy, scipy, pandas (core) — no additional dependencies
 
 # -----------------------------------------------------------------------------
 # QUANT_FINANCE
-# BacktestEngine, Vectorbt, SignalConstruction, PortfolioOptimizer,
-# RiskParity, BlackLitterman, LiquidityScorer, OpenBB, CreditSignals
+# Skills: BacktestEngine, Vectorbt, SignalConstruction, PortfolioOptimizer,
+#         RiskParity, BlackLitterman, LiquidityScorer, OpenBB, CreditSignals
 # -----------------------------------------------------------------------------
 vectorbt>=0.26
 cvxpy>=1.4
-pyportfolioopt>=1.5         # PortfolioOptimizer, BlackLitterman
-empyrical-reloaded>=0.5     # performance metrics (Py3.12 compatible fork)
-# openbb>=4.0               # optional - heavy install, uncomment if needed
+pyportfolioopt>=1.5              # PortfolioOptimizer, BlackLitterman, RiskParity
+empyrical-reloaded>=0.5          # performance metrics (Py3.12 compatible fork)
+yfinance>=0.2                    # market data fetching
+# openbb>=4.0                    # optional — heavy install, uncomment if needed
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Classical
-# GARCH, ARIMA, RegimeDetection, HypothesisTesting, Clustering, PCA,
-# AnomalyDetection, GaussianProcess, PowerAnalysis
+# Skills: GARCH, ARIMA, RegimeDetection, HypothesisTesting, Clustering, PCA,
+#         AnomalyDetection, GaussianProcess, PowerAnalysis
 # -----------------------------------------------------------------------------
 scikit-learn>=1.3
 statsmodels>=0.14
-arch>=6.0                   # GARCH
-hmmlearn>=0.3               # RegimeDetection (Hidden Markov Models)
-pingouin>=0.5               # HypothesisTesting (stats tests)
+arch>=6.0                        # GARCH
+hmmlearn>=0.3                    # RegimeDetection (Hidden Markov Models)
+pingouin>=0.5                    # HypothesisTesting (stats tests)
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Conformal & Calibration
-# ConformalPrediction
+# Skills: ConformalPrediction
 # -----------------------------------------------------------------------------
-mapie>=0.8                  # ConformalPrediction
+mapie>=0.8                       # ConformalPrediction
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Bayesian
-# BayesianRegression, BayesianABTest, GaussianProcess
+# Skills: BayesianRegression, BayesianABTest, GaussianProcess
 # -----------------------------------------------------------------------------
 pymc>=5.10
 arviz>=0.17
-bambi>=0.13                 # Bayesian regression DSL
+bambi>=0.13                      # Bayesian regression DSL
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Causal
-# CausalEffect, DiffInDiff, SyntheticControl
+# Skills: CausalEffect, DiffInDiff, SyntheticControl
 # -----------------------------------------------------------------------------
 dowhy>=0.11
-econml>=0.15                # heterogeneous treatment effects
+econml>=0.15                     # heterogeneous treatment effects
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Deep Learning
-# LSTMForecaster, TransformerForecaster, TimesFM
+# Skills: LSTMForecaster, TransformerForecaster, TimesFM
 # -----------------------------------------------------------------------------
 torch>=2.1
-pytorch-forecasting>=1.0    # TransformerForecaster
-lightning>=2.1              # PyTorch Lightning for training
-darts>=0.27                 # unified forecasting API
+pytorch-forecasting>=1.0         # TransformerForecaster
+lightning>=2.1                   # PyTorch Lightning for training
+darts>=0.27                      # unified forecasting API
+# timesfm                        # Google TimesFM — install via: pip install timesfm
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Explainability
-# SHAPExplainer
+# Skills: SHAPExplainer
 # -----------------------------------------------------------------------------
 shap>=0.44
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Graph & Network
-# GraphNeuralNetwork, NetworkAnalysis
+# Skills: GraphNeuralNetwork, NetworkAnalysis
 # -----------------------------------------------------------------------------
 networkx>=3.2
-torch-geometric>=2.4        # GNN (requires torch)
-# ogb>=1.3                  # Open Graph Benchmark datasets (optional)
+torch-geometric>=2.4             # GNN (requires torch)
+# ogb>=1.3                       # Open Graph Benchmark datasets (optional)
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Reinforcement Learning
-# ReinforcementLearning
+# Skills: ReinforcementLearning
 # -----------------------------------------------------------------------------
 stable-baselines3>=2.2
 gymnasium>=0.29
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Symbolic
-# SymbolicMath
+# Skills: SymbolicMath
 # -----------------------------------------------------------------------------
 sympy>=1.12
 
@@ -103,14 +104,14 @@ sympy>=1.12
 # ML_STATS - Optimization & Sensitivity
 # Used across multiple skills
 # -----------------------------------------------------------------------------
-optuna>=3.5                 # hyperparameter optimization
-pymoo>=0.6                  # multi-objective optimization
-SALib>=1.4                  # sensitivity analysis
-simpy>=4.1                  # discrete event simulation
+optuna>=3.5                      # hyperparameter optimization
+pymoo>=0.6                       # multi-objective optimization
+SALib>=1.4                       # sensitivity analysis
+simpy>=4.1                       # discrete event simulation
 
 # -----------------------------------------------------------------------------
 # INFRASTRUCTURE - Data
-# DataLoading, LargeScaleProcessing
+# Skills: DataLoading, LargeScaleProcessing
 # -----------------------------------------------------------------------------
 pyarrow>=14.0
 dask>=2024.1
@@ -119,48 +120,57 @@ fastparquet>=2024.2
 
 # -----------------------------------------------------------------------------
 # INFRASTRUCTURE - Visualization
-# EDA, PublicationFigures, PlotlyCharts, DashboardGenerator
+# Skills: EDA, PublicationFigures, PlotlyCharts, DashboardGenerator
 # -----------------------------------------------------------------------------
 matplotlib>=3.8
 seaborn>=0.13
 plotly>=5.18
 dash>=2.14
-kaleido>=0.2                # plotly static image export
+kaleido>=0.2                     # plotly static image export
+
+# -----------------------------------------------------------------------------
+# INFRASTRUCTURE - Image
+# Skills: ImageGeneration, GraphicalAbstracts
+# -----------------------------------------------------------------------------
+pillow>=10.0                     # image processing
 
 # -----------------------------------------------------------------------------
 # INFRASTRUCTURE - Documents & Reports
-# PDFReportGenerator, SlideGenerator, NotebookTemplate, GraphicalAbstracts
+# Skills: PDFReportGenerator, SlideGenerator, NotebookTemplate,
+#         GraphicalAbstracts, StakeholderNotebooks
 # -----------------------------------------------------------------------------
 nbformat>=5.9
 nbconvert>=7.14
 python-pptx>=0.6
 pdfplumber>=0.10
-reportlab>=4.0              # PDF generation
+reportlab>=4.0                   # PDF generation
 jinja2>=3.1
-weasyprint>=60              # HTML to PDF (optional, needs system deps)
+# weasyprint>=60                 # HTML to PDF (optional, needs system deps)
 
 # -----------------------------------------------------------------------------
 # INFRASTRUCTURE - Research
-# PyZotero
+# Skills: PyZotero
 # -----------------------------------------------------------------------------
 pyzotero>=1.5
 
 # -----------------------------------------------------------------------------
 # INFRASTRUCTURE - General
+# Skills: Workflows (orchestration utilities)
 # -----------------------------------------------------------------------------
 requests>=2.31
 tqdm>=4.66
 python-dotenv>=1.0
 pyyaml>=6.0
+joblib>=1.3                      # parallel processing / caching
 
 # -----------------------------------------------------------------------------
 # DEV & TESTING
 # -----------------------------------------------------------------------------
 pytest>=7.4
 pytest-cov>=4.1
-hypothesis>=6.92            # property-based testing
+hypothesis>=6.92                 # property-based testing
 mypy>=1.8
 ruff>=0.1
 pre-commit>=3.6
-ipykernel>=6.28             # Jupyter kernel
+ipykernel>=6.28                  # Jupyter kernel
 jupyterlab>=4.0

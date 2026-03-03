@@ -134,16 +134,22 @@ Running EDA via scripts/infrastructure/eda.py.
 ## 4. Research Workflow
 
 ```
-EDA → HYPOTHESIZE → SPLIT → EXECUTE → EVALUATE → LOG → PROMOTE
+EDA → HYPOTHESIZE → SPLIT → EXECUTE → LEAKAGE CHECK → EVALUATE → LOG → PROMOTE
 ```
 
 1. **EDA** — No `_clean` in `/data` → mandatory. Run `eda.py`. Save `_clean.parquet`.
 2. **Hypothesize** — H₀/H₁. Read skill `.md` before coding.
 3. **Split** — Canonical 60/20/20 temporal (§8). Boundaries → `results.json`. Test sealed.
 4. **Execute** — Call `/scripts/*.py`. Notebook + `analysis.py` → experiment folder.
-5. **Evaluate** — Iterate on val. Single touch on test. 4 metrics (§7). OOS > IS → suspicious.
-6. **Log** — `LOG.md` row. `README.md` + `results.json` in experiment folder.
-7. **Promote** — Polished notebook → `/notebooks/`. Figures/reports → `/artifacts/`.
+5. **Bias & Leakage Check** (mandatory before evaluation):
+   - [ ] Look-ahead: no feature at t uses data > t
+   - [ ] Survivorship: delisted/defaulted assets included or noted
+   - [ ] Transaction costs: excess returns survive 5bps slippage
+   - [ ] Selection: universe not cherry-picked post-hoc
+   - [ ] Stationarity: non-stationary inputs differenced or flagged
+6. **Evaluate** — Iterate on val. Single touch on test. 4 metrics (§7). OOS > IS → suspicious.
+7. **Log** — `LOG.md` row. `README.md` + `results.json` in experiment folder.
+8. **Promote** — Polished notebook → `/notebooks/`. Figures/reports → `/artifacts/`.
 
 ---
 
@@ -317,3 +323,4 @@ Defined in `/.claude/skills/infrastructure/Workflows.md`. Tag hypotheses: `(Work
 | Naming | `.md` PascalCase → `.py` snake_case |
 | Skills first | Check `/.claude/skills/` before ad-hoc code |
 | Checkpoints | Intermediates → `/data/` and experiment folder |
+| Failure protocol | Script error → log traceback + context to `notes.md` before fixing. No silent retries. |
