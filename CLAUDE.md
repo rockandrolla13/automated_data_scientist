@@ -147,7 +147,13 @@ EDA → HYPOTHESIZE → SPLIT → EXECUTE → LEAKAGE CHECK → EVALUATE → LOG
    - [ ] Transaction costs: excess returns survive 5bps slippage
    - [ ] Selection: universe not cherry-picked post-hoc
    - [ ] Stationarity: non-stationary inputs differenced or flagged
-6. **Evaluate** — Iterate on val. Single touch on test. 4 metrics (§7). OOS > IS → suspicious.
+6. **Evaluate** — Compute 4 metrics on **validation** set (§7). OOS > IS → suspicious.
+6b. **Revise** (max 3 iterations on validation, test stays sealed):
+   - If all 4 metrics ≥ "Moderate" thresholds (§7): proceed to step 7.
+   - If any metric below Moderate: **diagnose** (which metric failed? why?), **propose** 1-2 specific changes (not "try everything"), **re-execute** with changes.
+   - Log each iteration as HYP-XXX-iter2, HYP-XXX-iter3 in the experiment folder.
+   - After 3 iterations still below Moderate: STOP, log as FAILED, document diagnosis in README.md.
+   - Test set is NEVER touched during revision. Iteration is validation-only.
 7. **Log** — `LOG.md` row. `README.md` + `results.json` in experiment folder.
 8. **Promote** — Polished notebook → `/notebooks/`. Figures/reports → `/artifacts/`.
 
