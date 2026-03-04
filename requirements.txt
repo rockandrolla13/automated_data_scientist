@@ -50,11 +50,14 @@ mapie>=0.8                       # ConformalPrediction
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Bayesian
-# Skills: BayesianRegression, BayesianABTest, GaussianProcess
+# Skills: BayesianRegression, BayesianABTest, GaussianProcess, MCMC, VariationalInference
 # -----------------------------------------------------------------------------
 pymc>=5.10
 arviz>=0.17
 bambi>=0.13                      # Bayesian regression DSL
+jax>=0.4                         # PyMC backend, fast kernel ops
+jaxlib>=0.4                      # JAX runtime
+numpyro>=0.14                    # Lightweight JAX-native Bayesian inference
 
 # -----------------------------------------------------------------------------
 # ML_STATS - Causal
