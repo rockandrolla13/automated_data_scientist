@@ -1,0 +1,18 @@
+name: spread-momentum
+description: Cross-sectional spread momentum signal for IG bonds
+origin: HYP-001a (experiments/hyp_001a_10d/)
+workflow: A
+scripts:
+  - credit_signals.py::spread_momentum
+  - signal_construction.py::zscore_normalize
+  - backtest_engine.py::backtest
+params:
+  lookback: 10
+  z_window: 60
+  costs_bps: 5
+metrics:
+  oos_sharpe: 1.1
+  t_stat: 2.3
+  max_drawdown: -0.03
+  information_ratio: 0.9
+learnings: Works in low-vol regimes. Condition on VIX < 20 for best results.

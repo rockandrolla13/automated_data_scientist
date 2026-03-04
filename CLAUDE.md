@@ -139,6 +139,11 @@ EDA → HYPOTHESIZE → SPLIT → EXECUTE → LEAKAGE CHECK → EVALUATE → LOG
 
 1. **EDA** — No `_clean` in `/data` → mandatory. Run `eda.py`. Save `_clean.parquet`.
 2. **Hypothesize** — H₀/H₁. Read skill `.md` before coding.
+2b. **Retrieve** (before writing plan.md):
+   - Case bank: `retrieve_similar(hypothesis)` → adapt prior solutions if match ≥ 0.3.
+   - Solutions: `match_solution(hypothesis)` → load proven recipe if pattern matches.
+   - Literature: `recommend_methods(hypothesis)` → surface relevant papers/techniques.
+   - Reference all retrieved context in plan.md. If nothing found, note "No prior art" and proceed.
 3. **Split** — Canonical 60/20/20 temporal (§8). Boundaries → `results.json`. Test sealed.
 4. **Execute** — Call `/scripts/*.py`. Notebook + `analysis.py` → experiment folder.
 5. **Bias & Leakage Check** (mandatory before evaluation):
@@ -154,6 +159,15 @@ EDA → HYPOTHESIZE → SPLIT → EXECUTE → LEAKAGE CHECK → EVALUATE → LOG
    - Log each iteration as HYP-XXX-iter2, HYP-XXX-iter3 in the experiment folder.
    - After 3 iterations still below Moderate: STOP, log as FAILED, document diagnosis in README.md.
    - Test set is NEVER touched during revision. Iteration is validation-only.
+6c. **Branch** (optional, for high-value hypotheses):
+   - If step 6b converges to PARTIAL but not CONFIRMED, consider branching.
+   - Generate up to 3 **independent draft approaches** for the same hypothesis.
+   - Each draft uses a different method or feature set (e.g., GARCH vs Regime vs LSTM for the same vol question).
+   - Each draft gets its own plan.md and runs the full 6→6b cycle independently.
+   - Name branches: HYP-001-draftA, HYP-001-draftB, HYP-001-draftC.
+   - Compare all branches on validation. Promote the best to test. Log all branches.
+   - This is the tree-search principle: explore multiple solution paths, don't just iterate on one.
+   - Budget: only branch on hypotheses worth the compute. Ask: "is this a core signal or a side experiment?"
 7. **Log** — `LOG.md` row. `README.md` + `results.json` in experiment folder.
 8. **Promote** — Polished notebook → `/notebooks/`. Figures/reports → `/artifacts/`.
 
@@ -205,11 +219,11 @@ ml_stats/        GARCH, ARIMA, RegimeDetection, LSTMForecaster,
                  BayesianABTest, PowerAnalysis, SymbolicMath,
                  GraphNeuralNetwork, ReinforcementLearning, NetworkAnalysis
 
-infrastructure/  EDA, PublicationFigures, DashboardGenerator,
-                 NotebookTemplate, PyZotero, DataLoading,
-                 LargeScaleProcessing, PlotlyCharts, ImageGeneration,
-                 PDFReportGenerator, GraphicalAbstracts,
-                 StakeholderNotebooks, SlideGenerator, Workflows
+infrastructure/  CaseBank, DashboardGenerator, DataLoading, EDA,
+                 GraphicalAbstracts, ImageGeneration, KnowledgeRetrieval,
+                 LargeScaleProcessing, NotebookTemplate, PDFReportGenerator,
+                 PlotlyCharts, PublicationFigures, PyZotero, SlideGenerator,
+                 SolutionRetrieval, StakeholderNotebooks, Workflows
 ```
 
 ### Scripts (`/scripts/*.py`)
@@ -218,6 +232,8 @@ Each contains:
 - **Script wrapper** — `if __name__ == "__main__"` with CONFIG, writes `results.json`
 
 Naming: `.md` PascalCase → `.py` snake_case. Same stem.
+
+Infrastructure retrieval scripts: `case_bank.py`, `knowledge_retrieval.py`, `solution_retrieval.py`
 
 ---
 
