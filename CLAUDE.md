@@ -271,12 +271,37 @@ train, val, test = df.iloc[:t1], df.iloc[t1:t2], df.iloc[t2:]
 
 ```
 /experiments/hyp_001_spread_momentum/
+├── plan.md          ← Experiment plan: H₀/H₁ + numbered steps + scripts + expected outcome
 ├── README.md        ← Hypothesis, method, results, learnings
 ├── notebook.ipynb   ← Working notebook
 ├── analysis.py      ← Clean script (calls /scripts/*.py)
-├── results.json     ← Metrics, split, parameters
+├── results.json     ← Metrics, split, parameters, iteration history
 ├── figures/
 └── notes.md         ← Optional lab notes
+```
+
+plan.md (created before execution, reviewable):
+```markdown
+## Hypothesis
+- **H₀:** <null hypothesis>
+- **H₁:** <alternative hypothesis>
+
+## Plan
+1. **Load:** data/<file> via <loader script>
+2. **Features:** <function>() from <script>, params=<...>
+3. **Signal/Model:** <function>() from <script>
+4. **Evaluate:** 4 canonical metrics on validation (§7)
+5. **If below Moderate:** revise per §4 step 6b
+6. **Single touch test set** with best validation config
+
+## Scripts
+- <script1>.py, <script2>.py
+
+## Skill References
+- <Skill1>.md, <Skill2>.md
+
+## Expected Outcome
+<1-2 sentences on what success/failure would look like>
 ```
 
 results.json:
