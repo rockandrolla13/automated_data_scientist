@@ -207,17 +207,18 @@ credit_fi/       MertonModel, HazardRateBootstrap, SpreadDecomposition,
                  NelsonSiegel, BondAnalytics, OASCalculator,
                  ETFPremiumDiscount, TransitionMatrix
 
-quant_finance/   BacktestEngine, Vectorbt, SignalConstruction,
-                 PortfolioOptimizer, RiskParity, BlackLitterman,
-                 LiquidityScorer, OpenBB, CreditSignals
+quant_finance/   BacktestEngine, BlackLitterman, BrownianBridge,
+                 CreditSignals, LiquidityScorer, OpenBB,
+                 PortfolioOptimizer, RiskParity, SignalConstruction,
+                 Vectorbt
 
-ml_stats/        GARCH, ARIMA, RegimeDetection, LSTMForecaster,
-                 TimesFM, TransformerForecaster, SHAPExplainer,
-                 ConformalPrediction, BayesianRegression, CausalEffect,
-                 DiffInDiff, SyntheticControl, HypothesisTesting,
-                 Clustering, PCA, AnomalyDetection, GaussianProcess,
-                 BayesianABTest, PowerAnalysis, SymbolicMath,
-                 GraphNeuralNetwork, ReinforcementLearning, NetworkAnalysis
+ml_stats/        AnomalyDetection, ARIMA, BayesianABTest, BayesianRegression,
+                 CausalEffect, Clustering, ConformalPrediction, DiffInDiff,
+                 GARCH, GaussianProcess, GraphNeuralNetwork, HypothesisTesting,
+                 KernelMethods, LSTMForecaster, MCMC, NetworkAnalysis, PCA,
+                 PowerAnalysis, RegimeDetection, ReinforcementLearning,
+                 SHAPExplainer, SymbolicMath, SyntheticControl, TimesFM,
+                 TransformerForecaster, VariationalInference
 
 infrastructure/  CaseBank, DashboardGenerator, DataLoading, EDA,
                  GraphicalAbstracts, ImageGeneration, KnowledgeRetrieval,
@@ -234,6 +235,8 @@ Each contains:
 Naming: `.md` PascalCase → `.py` snake_case. Same stem.
 
 Infrastructure retrieval scripts: `case_bank.py`, `knowledge_retrieval.py`, `solution_retrieval.py`
+
+New Bayesian/simulation scripts: `mcmc.py`, `variational_inference.py`, `kernel_methods.py`, `brownian_bridge.py`
 
 ---
 
