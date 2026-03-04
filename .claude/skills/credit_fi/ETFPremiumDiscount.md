@@ -1,3 +1,8 @@
+---
+name: etf-premium-discount
+description: Use when measuring ETF premium/discount to NAV or identifying arbitrage and liquidity stress in credit ETFs.
+---
+
 # ETFPremiumDiscount
 
 ## When to Use

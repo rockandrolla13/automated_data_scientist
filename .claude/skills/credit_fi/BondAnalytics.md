@@ -1,3 +1,8 @@
+---
+name: bond-analytics
+description: Use when computing bond price, yield, duration, convexity from cash flows or analyzing price sensitivity to yield changes.
+---
+
 # BondAnalytics
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: bayesian-ab-test
+description: Use when running A/B tests with Bayesian framework to get posterior probabilities instead of p-values.
+---
+
 # BayesianABTest
 
 ## When to Use

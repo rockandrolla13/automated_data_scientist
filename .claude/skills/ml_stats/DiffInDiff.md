@@ -1,3 +1,8 @@
+---
+name: diff-in-diff
+description: Use when estimating treatment effects with a control group and pre/post periods under parallel trends assumption.
+---
+
 # DiffInDiff
 
 ## When to Use

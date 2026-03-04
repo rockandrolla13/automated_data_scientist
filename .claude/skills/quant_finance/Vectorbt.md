@@ -1,3 +1,8 @@
+---
+name: vectorbt-backtest
+description: Use when running high-performance vectorized backtests or parameter sweeps across thousands of combinations.
+---
+
 # Vectorbt
 
 ## When to Use

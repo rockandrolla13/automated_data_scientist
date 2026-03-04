@@ -1,3 +1,8 @@
+---
+name: hazard-rate-bootstrap
+description: Use when extracting implied hazard rates from CDS spreads or building a term structure of default probability.
+---
+
 # HazardRateBootstrap
 
 ## When to Use

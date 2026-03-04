@@ -1,3 +1,8 @@
+---
+name: hypothesis-testing
+description: Use when running formal statistical tests like t-test, Mann-Whitney, or KS with multiple comparison correction.
+---
+
 # HypothesisTesting
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: transition-matrix
+description: Use when estimating rating migration probabilities or computing multi-period transition matrices for stress testing.
+---
+
 # TransitionMatrix
 
 ## When to Use

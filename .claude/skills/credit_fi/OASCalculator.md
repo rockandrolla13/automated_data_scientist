@@ -1,3 +1,8 @@
+---
+name: oas-calculator
+description: Use when computing option-adjusted spread for callable or putable bonds or comparing bonds with embedded options.
+---
+
 # OASCalculator
 
 ## When to Use

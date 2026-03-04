@@ -1,3 +1,8 @@
+---
+name: liquidity-scorer
+description: Use when ranking assets by liquidity for trade execution or building liquidity factors for spread models.
+---
+
 # LiquidityScorer
 
 ## When to Use

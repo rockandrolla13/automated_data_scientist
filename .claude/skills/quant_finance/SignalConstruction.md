@@ -1,3 +1,8 @@
+---
+name: signal-construction
+description: Use when building trading signals from raw data including momentum, mean-reversion, carry, or value factors.
+---
+
 # SignalConstruction
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: graph-neural-network
+description: Use when data has graph structure like corporate networks or supply chains and neighbor features carry signal.
+---
+
 # GraphNeuralNetwork
 
 ## When to Use

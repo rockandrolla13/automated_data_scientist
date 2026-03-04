@@ -1,3 +1,8 @@
+---
+name: anomaly-detection
+description: Use when detecting unusual spread moves, volume spikes, or return outliers without labeled data.
+---
+
 # AnomalyDetection
 
 ## When to Use

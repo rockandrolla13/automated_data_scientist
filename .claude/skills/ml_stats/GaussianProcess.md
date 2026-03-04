@@ -1,3 +1,8 @@
+---
+name: gaussian-process
+description: Use when performing regression with full predictive uncertainty or Bayesian optimization with a surrogate model.
+---
+
 # GaussianProcess
 
 ## When to Use

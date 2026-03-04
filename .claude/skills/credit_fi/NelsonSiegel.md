@@ -1,3 +1,8 @@
+---
+name: nelson-siegel
+description: Use when fitting yield curves or spread curves with a parsimonious model or extracting level, slope, curvature factors.
+---
+
 # NelsonSiegel
 
 ## When to Use

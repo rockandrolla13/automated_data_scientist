@@ -1,3 +1,8 @@
+---
+name: black-litterman
+description: Use when incorporating subjective views into portfolio optimization or blending market equilibrium with analyst forecasts.
+---
+
 # BlackLitterman
 
 ## When to Use

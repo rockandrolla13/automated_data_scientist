@@ -1,3 +1,8 @@
+---
+name: risk-parity
+description: Use when allocating so each asset contributes equally to portfolio risk or when expected returns are unreliable.
+---
+
 # RiskParity
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: garch-volatility
+description: Use when modeling time-varying volatility, VaR/ES estimation, or comparing volatility model specifications.
+---
+
 # GARCH
 
 ## When to Use

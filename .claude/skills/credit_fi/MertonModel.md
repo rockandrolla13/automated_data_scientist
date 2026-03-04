@@ -1,3 +1,8 @@
+---
+name: merton-model
+description: Use when estimating default probability from equity prices and balance sheet data or computing distance-to-default.
+---
+
 # MertonModel
 
 ## When to Use

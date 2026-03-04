@@ -1,3 +1,8 @@
+---
+name: openbb-data
+description: Use when accessing free financial data for equity prices, macro indicators, crypto, or forex.
+---
+
 # OpenBB
 
 ## When to Use

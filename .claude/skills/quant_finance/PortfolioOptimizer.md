@@ -1,3 +1,8 @@
+---
+name: portfolio-optimizer
+description: Use when performing mean-variance optimization, minimum variance portfolios, or max Sharpe allocation with constraints.
+---
+
 # PortfolioOptimizer
 
 ## When to Use

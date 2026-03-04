@@ -1,3 +1,8 @@
+---
+name: conformal-prediction
+description: Use when creating distribution-free prediction intervals with coverage guarantees from any point forecast model.
+---
+
 # ConformalPrediction
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: backtest-engine
+description: Use when running strategy backtests from signal to PnL, walk-forward evaluation, or transaction cost analysis.
+---
+
 # BacktestEngine
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: spread-decomposition
+description: Use when decomposing credit spreads into default risk, liquidity, and residual components or analyzing CDS-bond basis.
+---
+
 # SpreadDecomposition
 
 ## When to Use

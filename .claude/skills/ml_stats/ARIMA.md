@@ -1,3 +1,8 @@
+---
+name: arima-forecasting
+description: Use when forecasting stationary or trend-stationary univariate time series as a baseline before ML approaches.
+---
+
 # ARIMA
 
 ## When to Use

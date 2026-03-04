@@ -1,3 +1,8 @@
+---
+name: causal-effect
+description: Use when estimating causal impact of an intervention or performing DAG-based causal reasoning.
+---
+
 # CausalEffect
 
 ## When to Use

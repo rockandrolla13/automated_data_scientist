@@ -1,3 +1,8 @@
+---
+name: bayesian-regression
+description: Use when performing regression with uncertainty on parameters or incorporating prior knowledge into estimation.
+---
+
 # BayesianRegression
 
 ## When to Use

@@ -1,3 +1,8 @@
+---
+name: credit-signals
+description: Use when building credit-specific trading signals like spread momentum, carry, value, or quality factors.
+---
+
 # CreditSignals
 
 ## When to Use
