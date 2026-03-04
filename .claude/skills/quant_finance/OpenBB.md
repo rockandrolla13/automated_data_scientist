@@ -1,22 +1,27 @@
 # OpenBB
 
 ## When to Use
-<!-- Describe scenarios where this skill applies -->
+- Accessing free financial data: equity prices, macro, crypto, forex.
+- Alternative to Bloomberg for personal/research use.
+- Rapid data exploration across asset classes.
 
 ## Packages
-<!-- Required Python packages -->
-
-## Math
-<!-- Mathematical background and formulas -->
+```python
+# pip install openbb (heavy, install on demand)
+from openbb import obb
+```
 
 ## Corresponding Script
-`/scripts/quant_finance/open_bb.py`
+`/scripts/quant_finance/openbb.py`
+- `get_equity_prices(symbol, start, end) -> pd.DataFrame`
+- `get_macro_data(series, start, end) -> pd.DataFrame`
+- `get_etf_holdings(symbol) -> pd.DataFrame`
 
 ## Gotchas
-<!-- Common pitfalls and edge cases -->
-
-## Interpretation
-<!-- How to interpret results -->
+1. **Heavy install.** ~2GB. Install in separate venv or on demand.
+2. **API keys required** for premium data (Polygon, FMP). Free sources have limits.
+3. **Data quality varies** by provider. Cross-check critical data.
+4. **Breaking changes.** OpenBB API changes frequently between versions. Pin version.
 
 ## References
-<!-- Academic papers, documentation links -->
+- OpenBB: https://docs.openbb.co/

@@ -1,22 +1,26 @@
 # Vectorbt
 
 ## When to Use
-<!-- Describe scenarios where this skill applies -->
+- High-performance vectorized backtesting (orders of magnitude faster than loops).
+- Parameter sweeps: testing 1000s of parameter combinations.
+- Built-in portfolio analytics, Sharpe, drawdown, returns.
 
 ## Packages
-<!-- Required Python packages -->
-
-## Math
-<!-- Mathematical background and formulas -->
+```python
+import vectorbt as vbt
+```
 
 ## Corresponding Script
 `/scripts/quant_finance/vectorbt.py`
+- `run_vbt_backtest(close, entries, exits, fees) -> VBTResult`
+- `parameter_sweep(close, param_grid) -> pd.DataFrame`
+- `plot_vbt_results(portfolio, path)` — equity curve, drawdowns
 
 ## Gotchas
-<!-- Common pitfalls and edge cases -->
-
-## Interpretation
-<!-- How to interpret results -->
+1. **Boolean signals.** vbt uses True/False entry/exit arrays, not position sizes. Convert first.
+2. **freq parameter.** Must match data frequency for correct annualization. `freq="1D"` for daily.
+3. **Memory.** Parameter sweeps with 10k+ combos can OOM. Batch them.
+4. **No short-selling by default.** Set `direction="both"` for long/short.
 
 ## References
-<!-- Academic papers, documentation links -->
+- vectorbt: https://vectorbt.dev/
