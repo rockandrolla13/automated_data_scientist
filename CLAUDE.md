@@ -313,11 +313,28 @@ results.json:
   "hypothesis": "IG spread 5d momentum predicts excess returns",
   "scripts_called": ["garch.py", "backtest_engine.py"],
   "split": {"t1": "2020-01-02", "t2": "2022-06-30"},
-  "metrics": {
+  "iterations": [
+    {
+      "iter": 1,
+      "params": {"lookback": 5, "z_window": 60},
+      "val_metrics": {"oos_sharpe": 0.31, "t_stat": 1.2, "max_drawdown": -0.06, "information_ratio": 0.28},
+      "diagnosis": "Sharpe below Moderate (0.5). Lookback too short for monthly rebalance.",
+      "action": "Increase lookback to 20"
+    },
+    {
+      "iter": 2,
+      "params": {"lookback": 20, "z_window": 60},
+      "val_metrics": {"oos_sharpe": 0.82, "t_stat": 1.91, "max_drawdown": -0.043, "information_ratio": 0.61},
+      "diagnosis": "All metrics >= Moderate. Proceed to test.",
+      "action": "Touch test set"
+    }
+  ],
+  "test_metrics": {
     "oos_sharpe": 0.82, "t_stat": 1.91,
     "max_drawdown": -0.043, "information_ratio": 0.61,
     "task_specific": {"hit_rate": 0.54, "justification": "binary signal"}
   },
+  "val_to_test_decay": "0% (within expected 40-60% range — investigate if suspiciously low)",
   "result": "PARTIAL",
   "learnings": "Works in low-vol regimes, reverses in high-vol.",
   "next_steps": ["HYP-001a: condition on vol regime"]
