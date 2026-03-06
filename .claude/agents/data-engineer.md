@@ -17,6 +17,10 @@ Call functions from these — do not reinvent:
 - /scripts/infrastructure/large_scale_processing.py
 
 ## Protocol
+0. **Discover** — Before any work, query the skill registry:
+   - Run `/find <task keywords>` to surface relevant skills
+   - Check if a preprocessing or loading skill exists for your data type
+   - Note any related skills that might help
 1. Check /data/ for existing clean versions before re-cleaning.
 2. Run eda.py. Save cleaned output as <n>_clean.parquet in /data/.
 3. Report: shape, dtypes, missing%, key distributions, correlations.

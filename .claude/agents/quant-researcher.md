@@ -15,6 +15,10 @@ Call functions from these — do not reinvent:
 - /scripts/quant_finance/*.py
 
 ## Protocol
+0. **Discover** — Before any work, query the skill registry:
+   - Run `/find <goal keywords>` to surface relevant skills
+   - Note which skills you'll use in plan.md
+   - Check related skills for alternatives you might be missing
 1. Every experiment starts with a written H₀/H₁.
 2. Read the skill .md for the method you're using. Follow its gotchas.
 3. Temporal split: 60/20/20. No shuffling. Boundaries logged.

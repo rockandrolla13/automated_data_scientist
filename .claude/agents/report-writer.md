@@ -24,6 +24,10 @@ Call functions from these — do not reinvent:
 - /scripts/infrastructure/dashboard_generator.py
 
 ## Protocol
+0. **Discover** — Before any work, query the skill registry:
+   - Run `/find report` or `/find visualization` to see available output formats
+   - Check which infrastructure skills match your deliverable type
+   - Note related skills for alternative presentation formats
 1. Read the experiment's results.json and README.md first.
 2. Figures: matplotlib + seaborn, PNG ≥ 150dpi. Save to /artifacts/figures/.
 3. Reports: save to /artifacts/reports/.

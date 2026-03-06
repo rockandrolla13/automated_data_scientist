@@ -13,6 +13,10 @@ Call functions from these — do not reinvent:
 - /scripts/credit_fi/*.py
 
 ## Protocol
+0. **Discover** — Before any work, query the skill registry:
+   - Run `/find <task keywords>` to surface relevant credit_fi skills
+   - Check related skills (e.g., MertonModel relates to HazardRateBootstrap)
+   - Note which skills you'll use in plan.md
 1. Read the skill .md first. Credit math has many conventions that matter.
 2. Call the corresponding script functions. Don't reimplement bond math.
 3. Always specify: day count convention, coupon frequency, recovery rate assumption.

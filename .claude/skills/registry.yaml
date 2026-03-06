@@ -1,0 +1,593 @@
+pack: agentds
+version: '1.0'
+global: true
+skills:
+- id: BondAnalytics
+  category: credit_fi
+  script: agentds.credit_fi.bond_analytics
+  tags: [cleaning, credit, fixed-income, optimization, preprocessing, pricing, rates]
+  keywords: []
+  use_when: Use when computing bond price, yield, duration, convexity from cash flows
+    or analyzing price sensitivity to yield changes.
+  related: []
+  not_for: []
+- id: ETFPremiumDiscount
+  category: credit_fi
+  script: agentds.credit_fi.e_t_f_premium_discount
+  tags: [credit, fixed-income, pricing]
+  keywords: []
+  use_when: Use when measuring ETF premium/discount to NAV or identifying arbitrage
+    and liquidity stress in credit ETFs.
+  related: []
+  not_for: []
+- id: HazardRateBootstrap
+  category: credit_fi
+  script: agentds.credit_fi.hazard_rate_bootstrap
+  tags: [credit, credit-risk, default, optimization, pricing, resampling, spreads]
+  keywords: []
+  use_when: Use when extracting implied hazard rates from CDS spreads or building
+    a term structure of default probability.
+  related: []
+  not_for: []
+- id: MertonModel
+  category: credit_fi
+  script: agentds.credit_fi.merton_model
+  tags: [credit, credit-risk, default, equity, optimization, pricing, risk, spreads]
+  keywords: []
+  use_when: Use when estimating default probability from equity prices and balance
+    sheet data or computing distance-to-default.
+  related: []
+  not_for: []
+- id: NelsonSiegel
+  category: credit_fi
+  script: agentds.credit_fi.nelson_siegel
+  tags: [credit, fixed-income, forecasting, optimization, rates, spreads]
+  keywords: []
+  use_when: Use when fitting yield curves or spread curves with a parsimonious model
+    or extracting level, slope, curvature factors.
+  related: []
+  not_for: []
+- id: OASCalculator
+  category: credit_fi
+  script: agentds.credit_fi.o_a_s_calculator
+  tags: [credit, fixed-income, optimization, pricing, rates, spreads]
+  keywords: []
+  use_when: Use when computing option-adjusted spread for callable or putable bonds
+    or comparing bonds with embedded options.
+  related: []
+  not_for: []
+- id: SpreadDecomposition
+  category: credit_fi
+  script: agentds.credit_fi.spread_decomposition
+  tags: [credit, credit-risk, default, fixed-income, rates, regime, risk, spreads,
+    state-space]
+  keywords: []
+  use_when: Use when decomposing credit spreads into default risk, liquidity, and
+    residual components or analyzing CDS-bond basis.
+  related: []
+  not_for: []
+- id: TransitionMatrix
+  category: credit_fi
+  script: agentds.credit_fi.transition_matrix
+  tags: [credit, credit-risk, default, regime, risk, state-space]
+  keywords: []
+  use_when: Use when estimating rating migration probabilities or computing multi-period
+    transition matrices for stress testing.
+  related: []
+  not_for: []
+- id: CaseBank
+  category: infrastructure
+  script: agentds.infrastructure.case_bank
+  tags: []
+  keywords: []
+  use_when: Use before planning a new experiment to retrieve similar past experiments.
+    Surfaces prior successes, failures, and learnings to avoid repeating mistakes.
+  related: []
+  not_for: []
+- id: DashboardGenerator
+  category: infrastructure
+  script: agentds.infrastructure.dashboard_generator
+  tags: [eda, exploration, panel, regime, risk, state-space]
+  keywords: []
+  use_when: '- Interactive multi-panel dashboards for monitoring or exploration. -
+    Combining multiple skill outputs (regime detection + PnL + risk) in one view.
+    - Stakeholder-facing live apps.'
+  related: []
+  not_for: []
+- id: DataLoading
+  category: infrastructure
+  script: agentds.infrastructure.data_loading
+  tags: [fixed-income, rates]
+  keywords: []
+  use_when: '- Loading CSV, Parquet, Excel, JSON into pandas/polars. - Downloading
+    from FRED, Yahoo Finance, or OpenBB. - Standardizing column names, dtypes, and
+    index before analysis.'
+  related: []
+  not_for: []
+- id: EDA
+  category: infrastructure
+  script: agentds.infrastructure.e_d_a
+  tags: [alpha, cleaning, credit, eda, exploration, preprocessing, pricing, signal]
+  keywords: []
+  use_when: '- First touch on any dataset. Mandatory before hypotheses (§4 Step 1).
+    - No `_clean` version in `/data/`. - Checking stationarity, nulls, outliers, distributions
+    before modeling.'
+  related: []
+  not_for: []
+- id: GraphicalAbstracts
+  category: infrastructure
+  script: agentds.infrastructure.graphical_abstracts
+  tags: []
+  keywords: []
+  use_when: '- Single-image summary of an experiment or paper. - Combining key figure
+    + results + workflow into one visual. - Conference posters, social media, executive
+    summaries.'
+  related: []
+  not_for: []
+- id: ImageGeneration
+  category: infrastructure
+  script: agentds.infrastructure.image_generation
+  tags: []
+  keywords: []
+  use_when: '- Scientific diagrams, schematics, conceptual illustrations. - Workflow
+    diagrams that are hard to draw programmatically. - Graphical abstracts for papers
+    or presentations.'
+  related: []
+  not_for: []
+- id: KnowledgeRetrieval
+  category: infrastructure
+  script: agentds.infrastructure.knowledge_retrieval
+  tags: [credit, credit-risk, default]
+  keywords: []
+  use_when: Use before writing plan.md to retrieve relevant research papers and methods
+    for the current hypothesis. Searches arXiv and semantic scholar for applicable
+    techniques.
+  related: []
+  not_for: []
+- id: LargeScaleProcessing
+  category: infrastructure
+  script: agentds.infrastructure.large_scale_processing
+  tags: []
+  keywords: []
+  use_when: '- Dataset > 1GB or > 10M rows. Pandas runs out of memory. - Lazy evaluation
+    needed (compute only what''s accessed). - Parallelized groupby, rolling, or join
+    operations.'
+  related: []
+  not_for: []
+- id: NotebookTemplate
+  category: infrastructure
+  script: agentds.infrastructure.notebook_template
+  tags: [cleaning, preprocessing]
+  keywords: []
+  use_when: '- Generating executable Jupyter notebooks from experiment specs. - Promoting
+    working notebooks to polished `/notebooks/` versions. - Creating stakeholder-friendly
+    notebooks with narrative between code'
+  related: []
+  not_for: []
+- id: PDFReportGenerator
+  category: infrastructure
+  script: agentds.infrastructure.p_d_f_report_generator
+  tags: [credit-risk, default]
+  keywords: []
+  use_when: '- Final deliverable reports from experiments. - Structured documents:
+    title, abstract, methodology, results, appendix. - LaTeX quality without writing
+    LaTeX (uses Jinja2 templates + weasyprint or fpdf'
+  related: []
+  not_for: []
+- id: PlotlyCharts
+  category: infrastructure
+  script: agentds.infrastructure.plotly_charts
+  tags: [time-series]
+  keywords: []
+  use_when: '- Interactive charts for notebooks or dashboards. - Candlestick charts,
+    3D surfaces, animated time series. - When static matplotlib isn''t sufficient
+    (hover, zoom, drill-down).'
+  related: []
+  not_for: []
+- id: PublicationFigures
+  category: infrastructure
+  script: agentds.infrastructure.publication_figures
+  tags: [cleaning, credit-risk, default, panel, preprocessing, time-series]
+  keywords: []
+  use_when: '- Any plot saved to `/artifacts/figures/` or experiment `figures/`. -
+    Journal-quality figures with consistent style. - Time series, distributions, scatter,
+    heatmaps, correlation matrices.'
+  related: []
+  not_for: []
+- id: PyZotero
+  category: infrastructure
+  script: agentds.infrastructure.py_zotero
+  tags: [fixed-income, rates]
+  keywords: []
+  use_when: '- Managing bibliography references for reports/wikis. - Searching your
+    Zotero library for papers related to a hypothesis. - Auto-generating citation
+    lists for experiment READMEs.'
+  related: []
+  not_for: []
+- id: SlideGenerator
+  category: infrastructure
+  script: agentds.infrastructure.slide_generator
+  tags: [credit-risk, default]
+  keywords: []
+  use_when: '- Presentation decks from experiment results. - Conference talks, team
+    updates, investor presentations. - Automated slide generation from results.json
+    + figures.'
+  related: []
+  not_for: []
+- id: SolutionRetrieval
+  category: infrastructure
+  script: agentds.infrastructure.solution_retrieval
+  tags: [alpha, backtesting, credit, cross-sectional, regime, signal, spreads, state-space]
+  keywords: []
+  use_when: Use when a known strategy pattern (momentum, carry, mean-reversion, vol
+    regime) matches the current task. Retrieves proven recipes from solutions/ for
+    fast-start execution.
+  related: []
+  not_for: []
+- id: StakeholderNotebooks
+  category: infrastructure
+  script: agentds.infrastructure.stakeholder_notebooks
+  tags: [optimization, risk]
+  keywords: []
+  use_when: '- Non-technical audience needs to see results. - Executive summaries
+    with charts but minimal code. - Databricks/Jupyter notebooks optimized for presentation
+    (hide code, show outputs).'
+  related: []
+  not_for: []
+- id: Workflows
+  category: infrastructure
+  script: agentds.infrastructure.workflows
+  tags: [alpha, backtesting, causal, cleaning, eda, exploration, heteroskedasticity,
+    preprocessing, signal, time-series, volatility]
+  keywords: []
+  use_when: '- Starting any multi-step experiment. Match task to a template before
+    improvising. - Mode B (Agentic): tag each hypothesis with its workflow letter.
+    - Novel workflow needed: compose freely but documen'
+  related: []
+  not_for: []
+- id: ARIMA
+  category: ml_stats
+  script: agentds.ml_stats.a_r_i_m_a
+  tags: [causal, eda, exploration, forecasting, pricing, time-series]
+  keywords: []
+  use_when: Use when forecasting stationary or trend-stationary univariate time series
+    as a baseline before ML approaches.
+  related: []
+  not_for: []
+- id: AnomalyDetection
+  category: ml_stats
+  script: agentds.ml_stats.anomaly_detection
+  tags: [credit, regime, spreads, state-space]
+  keywords: []
+  use_when: Use when detecting unusual spread moves, volume spikes, or return outliers
+    without labeled data.
+  related: []
+  not_for: []
+- id: BayesianABTest
+  category: ml_stats
+  script: agentds.ml_stats.bayesian_a_b_test
+  tags: [bayesian, credit-risk, default, sampling, uncertainty]
+  keywords: []
+  use_when: Use when running A/B tests with Bayesian framework to get posterior probabilities
+    instead of p-values.
+  related: []
+  not_for: []
+- id: BayesianRegression
+  category: ml_stats
+  script: agentds.ml_stats.bayesian_regression
+  tags: [bayesian, credit-risk, default, regression, sampling, uncertainty]
+  keywords: []
+  use_when: Use when performing regression with uncertainty on parameters or incorporating
+    prior knowledge into estimation.
+  related: []
+  not_for: []
+- id: CausalEffect
+  category: ml_stats
+  script: agentds.ml_stats.causal_effect
+  tags: [causal, graph, regression]
+  keywords: []
+  use_when: Use when estimating causal impact of an intervention or performing DAG-based
+    causal reasoning.
+  related: []
+  not_for: []
+- id: Clustering
+  category: ml_stats
+  script: agentds.ml_stats.clustering
+  tags: [clustering, credit, credit-risk, default, dimensionality-reduction, regime,
+    resampling, spreads, state-space]
+  keywords: []
+  use_when: Use when grouping assets or issuers by behavior patterns or identifying
+    regime clusters in time windows. Includes spectral clustering for non-linear separation.
+  related: []
+  not_for: []
+- id: ConformalPrediction
+  category: ml_stats
+  script: agentds.ml_stats.conformal_prediction
+  tags: [alpha, classification, forecasting, prediction-intervals, regression, signal,
+    time-series, uncertainty]
+  keywords: []
+  use_when: Use when creating distribution-free prediction intervals with coverage
+    guarantees from any point forecast model.
+  related: []
+  not_for: []
+- id: DiffInDiff
+  category: ml_stats
+  script: agentds.ml_stats.diff_in_diff
+  tags: [alpha, causal, clustering, credit, panel, signal]
+  keywords: []
+  use_when: Use when estimating treatment effects with a control group and pre/post
+    periods under parallel trends assumption.
+  related: []
+  not_for: []
+- id: GARCH
+  category: ml_stats
+  script: agentds.ml_stats.g_a_r_c_h
+  tags: [alpha, forecasting, heteroskedasticity, optimization, pricing, risk, signal,
+    time-series, volatility]
+  keywords: []
+  use_when: Use when modeling time-varying volatility, VaR/ES estimation, or comparing
+    volatility model specifications.
+  related: []
+  not_for: []
+- id: GaussianProcess
+  category: ml_stats
+  script: agentds.ml_stats.gaussian_process
+  tags: [bayesian, deep-learning, optimization, regression, uncertainty]
+  keywords: []
+  use_when: Use when performing regression with full predictive uncertainty or Bayesian
+    optimization with a surrogate model.
+  related: []
+  not_for: []
+- id: GraphNeuralNetwork
+  category: ml_stats
+  script: agentds.ml_stats.graph_neural_network
+  tags: [alpha, classification, credit-risk, default, graph, risk, signal]
+  keywords: []
+  use_when: Use when data has graph structure like corporate networks or supply chains
+    and neighbor features carry signal.
+  related: []
+  not_for: []
+- id: HypothesisTesting
+  category: ml_stats
+  script: agentds.ml_stats.hypothesis_testing
+  tags: [fixed-income, rates, regime, state-space]
+  keywords: []
+  use_when: Use when running formal statistical tests like t-test, Mann-Whitney, or
+    KS with multiple comparison correction.
+  related: []
+  not_for: []
+- id: KernelMethods
+  category: ml_stats
+  script: agentds.ml_stats.kernel_methods
+  tags: [clustering, credit, credit-risk, default, dimensionality-reduction, regime,
+    risk, spreads, state-space]
+  keywords: []
+  use_when: Reference skill for choosing and computing kernels across GP, kernel PCA,
+    spectral clustering. When to use RBF vs Matérn vs polynomial.
+  related: []
+  not_for: []
+- id: LSTMForecaster
+  category: ml_stats
+  script: agentds.ml_stats.l_s_t_m_forecaster
+  tags: [deep-learning, forecasting, risk, time-series]
+  keywords: []
+  use_when: '- Sequence-to-one or sequence-to-sequence time series forecasting. -
+    When temporal dependencies span many lags (>20). - Baseline deep learning model
+    before trying transformers.'
+  related: []
+  not_for: []
+- id: MCMC
+  category: ml_stats
+  script: agentds.ml_stats.m_c_m_c
+  tags: [alpha, bayesian, credit, credit-risk, default, eda, exploration, fixed-income,
+    forecasting, rates, regime, sampling, signal, simulation, spreads, state-space,
+    uncertainty]
+  keywords: []
+  use_when: Markov Chain Monte Carlo for full Bayesian posterior estimation. Use when
+    you need credible intervals, posterior predictive checks, or model comparison
+    via WAIC/LOO.
+  related: []
+  not_for: []
+- id: NetworkAnalysis
+  category: ml_stats
+  script: agentds.ml_stats.network_analysis
+  tags: [clustering, graph]
+  keywords: []
+  use_when: '- Analyzing corporate networks, interbank lending, CDS counterparty exposure.
+    - Centrality measures: which node is most systemically important? - Community
+    detection: natural clusters in relationship'
+  related: []
+  not_for: []
+- id: PCA
+  category: ml_stats
+  script: agentds.ml_stats.p_c_a
+  tags: [credit, dimensionality-reduction, explainability, regime, spreads, state-space]
+  keywords: []
+  use_when: Use for dimensionality reduction, identifying latent factors (level, slope,
+    curvature), or removing multicollinearity. Includes kernel PCA for non-linear
+    structure.
+  related: []
+  not_for: []
+- id: PowerAnalysis
+  category: ml_stats
+  script: agentds.ml_stats.power_analysis
+  tags: [alpha, backtesting, signal]
+  keywords: []
+  use_when: '- Before running an experiment: how much data do you need? - After a
+    null result: was the test underpowered? - Designing A/B tests, clinical trials,
+    signal backtests.'
+  related: []
+  not_for: []
+- id: RegimeDetection
+  category: ml_stats
+  script: agentds.ml_stats.regime_detection
+  tags: [alpha, pricing, regime, risk, signal, state-space, time-series]
+  keywords: []
+  use_when: '- Identifying market regimes (bull/bear, high/low vol, risk-on/off).
+    - Hidden Markov Models for state-dependent behavior. - Conditioning signals on
+    regime (e.g., momentum works in low-vol only).'
+  related: []
+  not_for: []
+- id: ReinforcementLearning
+  category: ml_stats
+  script: agentds.ml_stats.reinforcement_learning
+  tags: [allocation, portfolio, reinforcement-learning, risk, simulation]
+  keywords: []
+  use_when: '- Sequential decision problems: optimal execution, portfolio rebalancing.
+    - When actions affect future states (trading impact, inventory management). -
+    NOT for static prediction tasks (use supervised'
+  related: []
+  not_for: []
+- id: SHAPExplainer
+  category: ml_stats
+  script: agentds.ml_stats.s_h_a_p_explainer
+  tags: [deep-learning, explainability]
+  keywords: []
+  use_when: '- Explaining black-box model predictions (tree models, neural nets, any
+    sklearn model). - Feature importance with theoretical guarantees (Shapley values).
+    - Debugging: why did the model predict X for'
+  related: []
+  not_for: []
+- id: SymbolicMath
+  category: ml_stats
+  script: agentds.ml_stats.symbolic_math
+  tags: [pricing]
+  keywords: []
+  use_when: '- Deriving closed-form solutions (option pricing, duration formulas).
+    - Verifying numerical results against analytical expressions. - Symbolic differentiation
+    for sensitivity analysis (Greeks, delta-m'
+  related: []
+  not_for: []
+- id: SyntheticControl
+  category: ml_stats
+  script: agentds.ml_stats.synthetic_control
+  tags: [credit, optimization]
+  keywords: []
+  use_when: '- Single treated unit, multiple control units. Classic: "what if X didn''t
+    happen?" - Policy/event impact with no parallel-trends assumption (unlike DiD).
+    - Credit: impact of rating downgrade on a spec'
+  related: []
+  not_for: []
+- id: TimesFM
+  category: ml_stats
+  script: agentds.ml_stats.times_f_m
+  tags: [forecasting, prediction-intervals, time-series, uncertainty]
+  keywords: []
+  use_when: '- Zero-shot time series forecasting (no training needed). - Quick baseline:
+    does a foundation model beat your hand-tuned model? - When limited training data
+    makes supervised approaches unreliable.'
+  related: []
+  not_for: []
+- id: TransformerForecaster
+  category: ml_stats
+  script: agentds.ml_stats.transformer_forecaster
+  tags: [causal, deep-learning, forecasting, time-series]
+  keywords: []
+  use_when: '- Multi-variate time series forecasting with attention mechanisms. -
+    When you need interpretable attention weights (which lags matter). - Temporal
+    Fusion Transformer (TFT) for mixed static + temporal'
+  related: []
+  not_for: []
+- id: VariationalInference
+  category: ml_stats
+  script: agentds.ml_stats.variational_inference
+  tags: [bayesian, credit, eda, exploration, forecasting, optimization, sampling,
+    spreads, uncertainty]
+  keywords: []
+  use_when: Fast approximate Bayesian inference via optimization. Use when MCMC is
+    too slow or for quick iteration on model structure.
+  related: []
+  not_for: []
+- id: BacktestEngine
+  category: quant_finance
+  script: agentds.quant_finance.backtest_engine
+  tags: [alpha, backtesting, explainability, signal]
+  keywords: []
+  use_when: Use when running strategy backtests from signal to PnL, walk-forward evaluation,
+    or transaction cost analysis.
+  related: []
+  not_for: []
+- id: BlackLitterman
+  category: quant_finance
+  script: agentds.quant_finance.black_litterman
+  tags: [allocation, credit-risk, default, forecasting, optimization, portfolio]
+  keywords: []
+  use_when: Use when incorporating subjective views into portfolio optimization or
+    blending market equilibrium with analyst forecasts.
+  related: []
+  not_for: []
+- id: BrownianBridge
+  category: quant_finance
+  script: agentds.quant_finance.brownian_bridge
+  tags: [credit, credit-risk, default, fixed-income, forecasting, pricing, rates,
+    simulation]
+  keywords: []
+  use_when: Monte Carlo simulation with pinned endpoints. Use for bond pricing paths,
+    default time simulation, and variance reduction.
+  related: []
+  not_for: []
+- id: CreditSignals
+  category: quant_finance
+  script: agentds.quant_finance.credit_signals
+  tags: [alpha, credit, credit-risk, cross-sectional, default, equity, fixed-income,
+    risk, signal, spreads]
+  keywords: []
+  use_when: Use when building credit-specific trading signals like spread momentum,
+    carry, value, or quality factors.
+  related: []
+  not_for: []
+- id: LiquidityScorer
+  category: quant_finance
+  script: agentds.quant_finance.liquidity_scorer
+  tags: [credit, equity, fixed-income, pricing, spreads]
+  keywords: []
+  use_when: Use when ranking assets by liquidity for trade execution or building liquidity
+    factors for spread models.
+  related: []
+  not_for: []
+- id: OpenBB
+  category: quant_finance
+  script: agentds.quant_finance.open_b_b
+  tags: [crypto, eda, equity, exploration, pricing]
+  keywords: []
+  use_when: Use when accessing free financial data for equity prices, macro indicators,
+    crypto, or forex.
+  related: []
+  not_for: []
+- id: PortfolioOptimizer
+  category: quant_finance
+  script: agentds.quant_finance.portfolio_optimizer
+  tags: [allocation, credit-risk, default, optimization, portfolio]
+  keywords: []
+  use_when: Use when performing mean-variance optimization, minimum variance portfolios,
+    or max Sharpe allocation with constraints.
+  related: []
+  not_for: []
+- id: RiskParity
+  category: quant_finance
+  script: agentds.quant_finance.risk_parity
+  tags: [allocation, clustering, optimization, portfolio, risk]
+  keywords: []
+  use_when: Use when allocating so each asset contributes equally to portfolio risk
+    or when expected returns are unreliable.
+  related: []
+  not_for: []
+- id: SignalConstruction
+  category: quant_finance
+  script: agentds.quant_finance.signal_construction
+  tags: [alpha, cross-sectional, optimization, pricing, signal]
+  keywords: []
+  use_when: Use when building trading signals from raw data including momentum, mean-reversion,
+    carry, or value factors.
+  related: []
+  not_for: []
+- id: Vectorbt
+  category: quant_finance
+  script: agentds.quant_finance.vectorbt
+  tags: [allocation, alpha, backtesting, credit-risk, default, equity, portfolio,
+    signal]
+  keywords: []
+  use_when: Use when running high-performance vectorized backtests or parameter sweeps
+    across thousands of combinations.
+  related: []
+  not_for: []
