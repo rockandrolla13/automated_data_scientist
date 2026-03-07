@@ -80,3 +80,4 @@ artifacts/figures/*.png
 *.pem
 *.key
 credentials.json
+*.zip
