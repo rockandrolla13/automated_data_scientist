@@ -50,13 +50,14 @@ class SkillMatch:
 def _find_registry_path() -> Path:
     """Find registry.yaml in standard locations."""
     candidates = [
-        Path.home() / ".claude" / "skills" / "agentds" / "registry.yaml",
         Path(".claude/skills/registry.yaml"),
         Path(__file__).parent.parent.parent / ".claude" / "skills" / "registry.yaml",
+        Path.home() / ".claude" / "skills" / "agentds" / "registry.yaml",
     ]
     for p in candidates:
+        # Resolve symlinks to get real path
         if p.exists():
-            return p
+            return p.resolve()
     raise FileNotFoundError(f"registry.yaml not found in: {[str(c) for c in candidates]}")
 
 
@@ -258,8 +259,12 @@ def validate_registry(
 
     # Check each skill has corresponding .py file
     for skill in skills:
-        # Convert PascalCase to snake_case
-        snake_name = re.sub(r'(?<!^)(?=[A-Z])', '_', skill.id).lower()
+        # Convert PascalCase to snake_case (handle acronyms like GARCH, ARIMA)
+        # First, handle transitions from acronym to word (e.g., LSTMForecaster -> LSTM_Forecaster)
+        s = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', skill.id)
+        # Then handle normal camelCase (e.g., BacktestEngine -> Backtest_Engine)
+        s = re.sub(r'([a-z])([A-Z])', r'\1_\2', s)
+        snake_name = s.lower()
         py_path = scripts_dir / skill.category / f"{snake_name}.py"
         if not py_path.exists():
             errors.append(f"Missing .py: {py_path}")
