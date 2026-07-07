@@ -1,0 +1,195 @@
+# BUILD PROMPT — Theme Hypothesis Ledger (Alaph Stage 1 substrate)
+
+You are executing an autonomous build session. Read this file fully, then
+read `ONTOLOGY.md` fully, before writing any code.
+
+## Session rules
+
+- AUTONOMOUS MODE: do not stop for approval at default gates. The ONLY
+  stopping conditions are: (a) a phase gate test fails twice after a fix
+  attempt, (b) a Tier-1 CI check cannot be satisfied without violating an
+  invariant, (c) all phases complete.
+- At the START of every phase: re-read the `ONTOLOGY.md` sections listed
+  for that phase, and the gate test files for that phase. Do not re-read
+  prior phases' plan text — completed code + passing gates are the contract.
+- BLOCKED-ITEM PROTOCOL: if a decision is required that `ONTOLOGY.md` does
+  not determine, append an entry to `BLOCKED.md` (ID, question, proposed
+  resolution, affected files), implement your proposed resolution behind a
+  named module-level constant, and continue. Never silently choose.
+- DELTA PROTOCOL: any design decision you make that is not derivable from
+  `ONTOLOGY.md` must be appended to `ONTOLOGY_DELTA.md` at the moment you
+  make it (decision, rationale, alternatives rejected). This document is
+  institutional memory; treat it as a deliverable equal to the code.
+- Gate tests are written and committed BEFORE the implementation they gate.
+  A phase is complete only when its gate tests pass AND all Tier-1 CI
+  checks pass.
+
+## Tier-1 invariants (enforced by construction — add to CI in Phase 0)
+
+- I1  Theme scores are never stored. `score(theme_id, as_of)` is a pure
+      function over the EvidenceLink ledger.
+      CI: `grep -rn "score.*: *float" src/themes/models.py` → empty.
+- I2  Pass A (claim extraction) is blind to the theme registry.
+      CI: import-linter contract — package `src/ingest/pass_a` MUST NOT
+      import from `src/themes`.
+- I3  Pass B (mapping) sees theme DEFINITIONS only (ThemeDefinitionView:
+      mechanism, shock_direction, operational_axis, horizon — no ledger,
+      no scores). Polarity is COMPUTED as
+      claim.direction × theme.predicted_direction, never emitted by an LLM.
+      CI: `grep -rn "EvidenceLink" src/ingest/pass_b/prompt_builder.py`
+      → empty; `grep -rn "polarity" src/ingest/pass_b/prompts/` → empty.
+- I4  EvidenceLink and ThemeEvent stores are append-only. Corrections are
+      new rows with `supersedes` set. No UPDATE/DELETE paths exist.
+      CI: persistence layer exposes only `append()` and read methods.
+- I5  ThemeHypothesis is frozen and has no public constructor outside the
+      fold module. Themes exist only as folds over ThemeEvent.
+      CI: `grep -rn "ThemeHypothesis(" src/ --include="*.py"` filtered to
+      exclude `src/themes/fold.py` and `tests/` → empty.
+- I6  No `predicted_direction` FIELD anywhere. It is a derived property:
+      d(θ) = shock_direction × mechanism.sign_product().
+      CI: `grep -rn "predicted_direction *[:=]" src/` → empty.
+- I7  `recorded_at` (transaction time) is set by the persistence layer
+      only. Backdating `effective_at` is permitted only when
+      provenance == "wiki_import" AND a source revision timestamp exists.
+- I8  Well-formedness gate on admission: WF(θ) requires (a) mechanism has
+      ≥ 1 intermediate node (chain length k ≥ 2), (b) falsifier is a
+      decidable predicate over available market data, (c) operational_axis
+      is in the tracked-axis registry, (d) horizon ≤ H_MAX = 120 days,
+      (e) any externally stated direction equals d(θ). Themes failing WF
+      route to the NEEDS_STRUCTURING queue; they are never force-admitted.
+
+## Phase DAG
+
+Each phase lists: deliverables, ONTOLOGY.md sections to re-read, gate tests.
+Do not begin a phase until the previous phase's gates pass.
+
+### Phase 0 — vocabulary, golden corpus, CI harness
+Deliverables:
+  - `src/vocab/nodes.py`: controlled transmission-node vocabulary,
+    ~60 nodes seeded from Collin-Dufresne determinants + credit-BMI factor
+    families (volatility, momentum, sentiment, liquidity/funding, supply,
+    business-cycle, valuation). Each node: id, description, synonyms list.
+  - `tests/golden/corpus/`: 5 synthetic research docs with a hand-written
+    expected end-state (`expected_registry.json`, `expected_claims.json`,
+    `expected_links.json`). Docs must jointly cover: 1 theme supported by
+    3 institutions, 1 theme contested (support + contradict), 1 orphan
+    cluster meeting admission (≥3 claims, ≥2 institutions, ≤30d),
+    1 orphan cluster failing admission, 1 doc repeating an institution's
+    prior claim (novelty-discount case).
+  - `tests/golden/wiki/`: 1 golden wiki page with 3 revisions —
+    (r1→r2) cosmetic edit, (r2→r3) mechanism refinement (same endpoints,
+    same sign product), plus a second page with an axis flip.
+  - CI harness running every Tier-1 grep/import check.
+Gate: `test_ci_harness_catches_planted_violations` — plant one violation
+  of each Tier-1 check in a scratch branch, assert CI fails on each.
+
+### Phase 1 — event log, fold, as-of queries
+Read: ONTOLOGY.md §Bitemporal, §Event semantics.
+Deliverables: `ThemeEvent`, `Mechanism`, `TransmissionEdge`,
+  `ThemeHypothesis` (frozen), `fold.py`, `as_of(t_x)` query, event-type
+  decision function per ONTOLOGY (MECHANISM_REVISED iff M' ≅ M;
+  RETIRED+CREATED iff M' ≇ M or σ' ≠ σ; AXIS_REVISED iff X only; etc.).
+Gates:
+  - `test_as_of_exact_states`: scripted event sequence, assert exact
+    registry states at 3 interleaved timestamps.
+  - `test_no_retroactive_mutation`: append late event, assert earlier
+    as-of results byte-identical.
+  - `test_fold_order_invariance` (property test, hypothesis lib):
+    reconstruction invariant under replay-order permutation of
+    same-timestamp events.
+  - `test_direction_consistency`: malformed theme where stated direction
+    ≠ σ·∏s is rejected by WF (invariant I8e).
+
+### Phase 2 — wiki extractor + revision replayer
+Read: ONTOLOGY.md §Identity, §WF predicate.
+Deliverables: wiki→hypothesis extractor (input: page text; output:
+  candidate (M, σ, X, H, F) over the node vocabulary, or
+  NEEDS_STRUCTURING with the failing WF clause named); revision replayer
+  with semantic pre-filter (mechanism-text cosine ≥ 0.92 → no event) and
+  structural diff on the extracted chain deciding the event type.
+  Case-B fallback: t0 prior import emitting CREATED at import date with a
+  synthetic prior-evidence row, s_prior ∈ {1,2,3}, decaying at the
+  standard half-life.
+Gates:
+  - `test_golden_revisions`: golden wiki page → exactly 1 CREATED +
+    1 MECHANISM_REVISED; cosmetic revision emits nothing; axis-flip page
+    emits AXIS_REVISED.
+  - `test_unparseable_routes_to_queue`: vibes-only page (k=1 chain)
+    lands in NEEDS_STRUCTURING with clause (a) named; no theme created.
+
+### Phase 3 — Pass A extractor (blind)
+Read: ONTOLOGY.md §AtomicClaim.
+Deliverables: `AtomicClaim` schema; extractor tagging claims with
+  vocabulary nodes; direction ∈ {+1,-1,0}; stated_conviction ∈ {1,2,3}.
+Gate: `test_golden_claims_exact`: golden corpus → expected_claims.json,
+  exact match on (market_variable, direction, mechanism_tags) per claim;
+  plus I2 import check green.
+
+### Phase 4 — Pass B mapper + evidence ledger
+Read: ONTOLOGY.md §EvidenceLink, §Identity.
+Deliverables: `ThemeDefinitionView`; structural pre-match (claim
+  mechanism_tags ∩ theme chain nodes ≠ ∅) before semantic match;
+  match_confidence with orphan threshold τ = 0.6; `theme_revision`
+  binding (fold-count at mapping time); remap policy — AXIS_REVISED or
+  MECHANISM_REVISED → supersede prior links and re-run Pass B;
+  HORIZON/FALSIFIER revisions → carry forward.
+Gates:
+  - `test_seam_extract_to_map`: synthetic doc with 1 support,
+    1 contradict, 1 orphan → assert exact EvidenceLink set (polarities
+    computed, signs verified against d(θ)) and orphan routing.
+  - `test_axis_flip_remap`: AXIS_REVISED with sign-convention flip →
+    every prior link superseded, re-run produces sign-flipped polarities.
+
+### >>> HOLISTIC REVIEW CHECKPOINT (mandatory, after Phase 4 gates pass)
+Run the code-review skill scoped to SIGN CONVENTIONS ONLY: enumerate
+every site computing a direction, polarity, or sign product; verify each
+against d(θ) = σ·∏s and the polarity formula. Write findings to
+`SIGN_AUDIT.md`. Fix before proceeding. (This is the scheduled
+firewall-inversion hunt.)
+
+### Phase 5 — scoring view
+Read: ONTOLOGY.md §Scoring.
+Deliverables: pure function
+  S_θ(t) = clip[-10,10]( Σ_i  p_i · s_i · λ^((t−t_i)/h) · ν_i )
+  with h = forward_horizon/2; novelty discount ν_i = 0.15 when claim i has
+  embedding cosine > 0.88 to a prior same-institution claim on the same
+  theme (cross-institution repeats keep ν = 1.0); per-institution net
+  contribution capped at ±3 per theme; breadth B_θ = count of distinct
+  institutions with net-positive contribution. All constants module-level
+  and named.
+Gates:
+  - `test_score_order_invariance` (property): S invariant under ledger
+    append-order permutation at fixed timestamps.
+  - `test_novelty_and_caps`: golden repeat-claim case → discounted;
+    synthetic single-institution flood → capped at ±3.
+  - `test_score_is_pure`: two calls at same as_of → identical; no state
+    mutated (assert via ledger row-count and hash before/after).
+
+### Phase 6 — orphan clustering + admission
+Read: ONTOLOGY.md §Admission.
+Deliverables: orphan clustering (mechanism-tag + embedding); admission
+  rule: ≥3 claims, ≥2 institutions, within 30 days → CandidateTheme
+  (CANDIDATE status) synthesized over the node vocabulary and passed
+  through WF; CANDIDATE→ACTIVE requires B ≥ 2 and |S| ≥ 2. Out-of-vocab
+  node proposals route to a REVIEW queue (never auto-added).
+Gate: `test_end_to_end_golden`: full pipeline parse→extract→map→score→
+  admit over the 5-doc corpus → assert exact expected_registry.json
+  end-state, including the failing-admission cluster remaining in the
+  orphan pool.
+
+### Phase 7 — wiki renderer + drift detection
+Read: ONTOLOGY.md §Rendered view.
+Deliverables: renderer producing per-theme pages (mechanism chain, axis,
+  S_θ and B_θ, falsifier + Breach Buffer state, per-institution evidence
+  table, event-log timeline); parser recovering structured fields from a
+  rendered page; nightly drift-diff job emitting proposed ThemeEvents
+  (provenance="analyst") into a REVIEW queue — never auto-applied.
+Gate: `test_render_parse_roundtrip`: fold → render → parse → recovered
+  ThemeHypothesis equals folded original, for every theme in the golden
+  end-state registry.
+
+## Completion criteria
+All phase gates green, all Tier-1 CI checks green, SIGN_AUDIT.md clean or
+findings fixed, ONTOLOGY_DELTA.md and BLOCKED.md up to date. Final action:
+regenerate PLAN_TRACKER.md marking phase status and emit a session summary
+listing every delta and blocked item.
